@@ -1,0 +1,47 @@
+.container {
+  background-color: #fff; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 500px; /* Set a fixed width for all containers */
+  margin: 20px auto; /* Center the containers horizontally */
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.user-details {
+  margin-top: 20px;
+  text-align: center; /* Center-align text */
+}
+
+.user-details p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #666;
+}
+
+.user-details strong {
+  color: #333;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  background: #e4e4e4;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  color: #333;
+  width: 100%; /* Ensure list items take full width */
+}
