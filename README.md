@@ -1,49 +1,61 @@
-# Hackon
+# Mercor Assessment
 
-# This project combines the power of natural language processing and movie data to provide you with the exciting features:
+### This project combines the power of natural language processing and candidate data to provide you with the exciting search mechanism:
 
-### Movie Chatbot
+## Importing data and setting up weaviate
+1. Go into Importing Data directory:
+  ```bash
+cd 'Importing Data'
+```
+2. Install the requirements
+```bash
+pip install -r requirements.txt
+```
+3. Enter openai keys in docker-compose.yml and Run the docker-compose
+```bash
+docker-compose up -d
+```
+4. Add schema to weaviate
+```bash
+python add_schema.py
+```
+5. Add data to weaviate
+```bash
+python add_data.py
+```
+6. Add relation properties between tables in weaviate
+```bash
+python add_cross_reference_properties.py
+```
+7. Add relation data between tables in weaviate
+```bash
+python add_cross_reference.py
+```
 
-- Engage in conversations with our chatbot to get movie recommendations.
-- Ask questions about your favorite movies, actors, or genres.
-- Discover new films tailored to your preferences.
+## Running Fast API backend
+1. Go into fast_api_backend directory:
+  ```bash
+cd fast_api_backend
+```
+2. Install the requirements
+```bash
+pip install -r requirements.txt
+```
+3. Run the server
+```bash
+python server.py
+```
 
-### Plot-Based Movie Search
-
-- Search for movies based on plot descriptions.
-- If you have a vague idea of a movie's plot but can't remember its title, our system will help you find it.
-- Access detailed movie information, including cast, release year, and ratings.
-
-### Movie Rental
-- Explore a dynamic movie rental system where movie rental prices vary based on user reviews and demand.
-- Enjoy competitive rental rates for highly-rated and in-demand movies.
-
-### Playlists
-- Access a variety of curated playlists for different movie genres, moods, and occasions.
-- Discover and enjoy recommended movies that match the theme of each playlist.
-  
-# Getting Started
-To get started with the project on your local machine, follow these steps:
-
-1. Clone the repository:
-2. Install the required dependencies:
-   <pre>
-  <code id="installCodeBlock">
-    npm install
-  </code>
-</pre>
-<button class="btn" data-clipboard-target="#installCodeBlock">
-  Copy
-</button>
-
-3. Start the development server:
-<pre>
-  <code id="startCodeBlock">
-    npm start
-  </code>
-</pre>
-<button class="btn" data-clipboard-target="#startCodeBlock">
-  Copy
-</button>
-
-4. Access the application in your web browser at http://localhost:3000.
+## Running frontend
+1. Go into frontend directory:
+  ```bash
+cd frontend
+```
+2. Install the requirements
+```bash
+npm i
+```
+3. Run the server
+```bash
+npm start
+```
