@@ -1,0 +1,5 @@
+fastapi==0.111.0
+openai==0.28.0
+python-dotenv==1.0.1
+uvicorn==0.30.1
+weaviate_client==4.5.0
