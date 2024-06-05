@@ -1,5 +1,5 @@
 import weaviate
-
+from queries.rerank import get_reranked
 # setting up client
 client = weaviate.Client("http://localhost:8080")
 
@@ -37,7 +37,7 @@ def get_extracted_data(user):
         "partTimeSalary": user["partTimeSalary"],
         "fullTimeSalary": user["fullTimeSalary"],
         "fullTime": user["fullTime"],
-        "partTime": user["partTime"],
+        "partTime": user["partTime"]
     }
     try:
         extracted_data["skills"] = list(
@@ -51,6 +51,12 @@ def get_extracted_data(user):
         )
     except:
         extracted_data["companies"] = []
+    try:
+        extracted_data["work_descriptions"] = list(
+            {work["description"] for work in user["has_resume"][0]["has_work_experience"]}
+        )
+    except Exception:
+        extracted_data["work_descriptions"] = []
     return extracted_data
 
 
@@ -110,11 +116,11 @@ def fetch_results(resp, user_chat_history):
                     "partTime",
                     "has_skills { ... on MercorUserSkills { has_skill_detail { ... on Skills {skillName}} } }",
                     "has_resume { ... on UserResume { has_work_experience { ... on  WorkExperience {company}} } }",
+                    "has_resume { ... on UserResume { has_work_experience { ... on  WorkExperience {description}} } }",
                 ],
             )
             .with_near_text({"concepts": near_text})
             .with_where(where_filter)
-            .with_additional(["distance"])
             .with_limit(200)
             .do()
         )
@@ -132,10 +138,10 @@ def fetch_results(resp, user_chat_history):
                     "partTime",
                     "has_skills { ... on MercorUserSkills { has_skill_detail { ... on Skills {skillName}} } }",
                     "has_resume { ... on UserResume { has_work_experience { ... on  WorkExperience {company}} } }",
+                    "has_resume { ... on UserResume { has_work_experience { ... on  WorkExperience {description}} } }",
                 ],
             )
             .with_near_text({"concepts": near_text})
-            .with_additional(["distance"])
             .with_limit(200)
             .do()
         )
@@ -143,4 +149,5 @@ def fetch_results(resp, user_chat_history):
     if response["data"]["Get"]["MercorUsers"]:
         for res in response["data"]["Get"]["MercorUsers"]:
             results.append(get_extracted_data(res))
+    results = get_reranked(results, near_text)
     return results

@@ -25,7 +25,6 @@ async def check_product(request: Request):
     user_chat_history = get_user_chat_history(chat_history)
     resp = get_response(user_chat_history)
     results = fetch_results(resp, user_chat_history)
-    print(results)
     if results == []:
         resp[
             "message"
